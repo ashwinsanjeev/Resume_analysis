@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = ['http://localhost:5000', 'http://backend:5000/api/analyze'];
 
 // DOM Elements
 const resumeUpload = document.getElementById('resume-upload');
