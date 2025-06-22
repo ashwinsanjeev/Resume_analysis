@@ -43,4 +43,4 @@ jobs:
           script: |
             echo "env=${{ secrets.env }}" > .env
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/Resumeanalysis:latest
-            sudo docker-compose -f docker-compose.yaml up -d
+            sudo docker-compose -f docker-compose.yml up -d
