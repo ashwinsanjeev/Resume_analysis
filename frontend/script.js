@@ -1,5 +1,7 @@
-const API_BASE_URL = ['http://localhost:5000', 'http://backend:5000/api/analyze'];
-
+const API_BASE_URL = window.location.hostname === 'localhost'
+  ? 'http://localhost:5000'
+  : 'http://backend:5000';
+  
 // DOM Elements
 const resumeUpload = document.getElementById('resume-upload');
 const fileNameDisplay = document.getElementById('file-name');
