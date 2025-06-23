@@ -11,7 +11,7 @@ const app = express();
 app.use(cors({
   origin: ['http://127.0.0.1:5500', 'http://localhost:5500', 'http://52.66.132.71:3000', 'https://resumeanalysis.duckdns.org'],
   methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
   optionsSuccessStatus: 200
 }));
