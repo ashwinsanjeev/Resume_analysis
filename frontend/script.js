@@ -1,6 +1,6 @@
 const API_BASE_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:5000'
-  : 'http://52.66.132.71:5000';
+  : 'https://apiresumeanalysis.duckdns.org';
 
 // DOM Elements
 const resumeUpload = document.getElementById('resume-upload');
