@@ -29,6 +29,10 @@ app.use(fileUpload({
 // Routes
 app.use('/api', apiRoutes);
 
+app.get("/", (req, res) => {
+  res.send("Apps work properly");
+});
+
 app.use((req, res, next) => {
   if (req.files) {
     console.log('Received files:', Object.keys(req.files));
