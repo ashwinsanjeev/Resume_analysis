@@ -9,7 +9,7 @@ const app = express();
 
 // Middleware
 app.options('/api/analyze', cors({
-  origin: 'https://resumeanalysis.duckdns.org',
+  origin: ['https://resumeanalysis.duckdns.org', 'http://52.66.132.71:5000']
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
