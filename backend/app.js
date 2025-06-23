@@ -8,11 +8,12 @@ const apiRoutes = require('./routes/api');
 const app = express();
 
 // Middleware
-app.options('/api/analyze', cors({
-  origin: ['https://resumeanalysis.duckdns.org', 'http://52.66.132.71:5000'],
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+app.use(cors({
+  origin: ['http://127.0.0.1:5500', 'http://localhost:5500', 'http://52.66.132.71:3000', 'https://resumeanalysis.duckdns.org'],
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true,
+  optionsSuccessStatus: 200
 }));
 
 app.use(morgan('dev'));
