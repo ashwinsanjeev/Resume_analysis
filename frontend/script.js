@@ -1,5 +1,5 @@
-const API_BASE_URL = 'http://52.66.132.71:5000'
-// const API_BASE_URL = 'https://apiresumeanalysis.duckdns.org'
+// const API_BASE_URL = 'http://52.66.132.71:5000'
+const API_BASE_URL = 'https://apiresumeanalysis.duckdns.org'
 
 // DOM Elements
 const resumeUpload = document.getElementById('resume-upload');
