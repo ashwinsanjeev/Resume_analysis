@@ -4,9 +4,10 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const morgan = require('morgan');
 const apiRoutes = require('./routes/api');
-
+const http = require("http");
 const app = express();
 
+const server = http.createServer(app);
 // Middleware
 app.use(cors({
   origin: ['http://127.0.0.1:5500', 'http://localhost:5500', 'http://52.66.132.71:3000', 'https://resumeanalysis.duckdns.org', 'https://apiresumeanalysis.duckdns.org'],
@@ -47,6 +48,7 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
