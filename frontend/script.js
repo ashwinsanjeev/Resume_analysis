@@ -46,14 +46,15 @@ async function analyzeResume() {
       method: 'POST',
       body: formData
     });
-    console.log(analysisResponse)
+    console.log(analysisResponse,"res")
     if (!analysisResponse.ok) {
       const errorData = await analysisResponse.json();
+         console.log(errorData, "errdata")
       throw new Error(errorData.error || 'Analysis failed');
     }
 
     const analysisData = await analysisResponse.json();
-    console.log(analysisData, "data")
+    console.log(analysisData, "succdata")
     displayResults(analysisData.data);
 
   } catch (error) {
