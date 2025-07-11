@@ -14,6 +14,7 @@ app.use(cors({
   origin: function (origin, callback) {
     const allowedOrigins = [
       'http://127.0.0.1:5501',
+      'http://52.66.132.71:3000',
       'https://resumeanalysis.duckdns.org',
       'https://apiresumeanalysis.duckdns.org',
     ];
