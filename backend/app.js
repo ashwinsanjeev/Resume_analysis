@@ -13,12 +13,9 @@ const server = http.createServer(app);
 app.use(cors({
   origin: function (origin, callback) {
     const allowedOrigins = [
-      'http://127.0.0.1:5500',
-      'http://localhost:5000',
-      'http://52.66.132.71:3000',
+      'http://127.0.0.1:5501',
       'https://resumeanalysis.duckdns.org',
       'https://apiresumeanalysis.duckdns.org',
-      'http://127.0.0.1:5501'
     ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -31,6 +28,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type'],
   optionsSuccessStatus: 200
 }));
+
 app.use(express.static('public'));
 
 // Manual CORS preflight handling
