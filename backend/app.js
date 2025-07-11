@@ -11,19 +11,27 @@ const server = http.createServer(app);
 
 // CORS middleware (put FIRST)
 app.use(cors({
-  origin: [
-    'http://127.0.0.1:5500',
-    'http://localhost:5000',
-    'http://52.66.132.71:3000',
-    'https://resumeanalysis.duckdns.org',
-    'https://apiresumeanalysis.duckdns.org',
-    'http://127.0.0.1:5501'
-  ],
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      'http://127.0.0.1:5500',
+      'http://localhost:5000',
+      'http://52.66.132.71:3000',
+      'https://resumeanalysis.duckdns.org',
+      'https://apiresumeanalysis.duckdns.org',
+      'http://127.0.0.1:5501'
+    ];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
-  credentials: true,
   optionsSuccessStatus: 200
 }));
+
 
 // Manual CORS preflight handling
 app.options('/api/*', cors());
