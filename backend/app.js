@@ -9,7 +9,7 @@ const https = require('https');
 const app = express();
 const server = http.createServer(app);
 // Middleware
-const alloworgins=[['http://127.0.0.1:5500','http://127.0.0.1:5501', 'http://52.66.132.71:3000', 'https://resumeanalysis.duckdns.org']]
+const alloworgins=['http://127.0.0.1:5500','http://127.0.0.1:5501', 'http://52.66.132.71:3000', 'https://resumeanalysis.duckdns.org']
 app.use(
   cors({
     origin: function (origin, callback) {
