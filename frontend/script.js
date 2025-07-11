@@ -1,5 +1,5 @@
-// const API_BASE_URL = 'http://localhost:5000'
 const API_BASE_URL = 'https://apiresumeanalysis.duckdns.org'
+// const API_BASE_URL = 'http://localhost:5000'
 
 // DOM Elements
 const resumeUpload = document.getElementById('resume-upload');
@@ -17,54 +17,55 @@ analyzeBtn.addEventListener('click', analyzeResume);
 
 // Handle file upload
 function handleFileUpload(e) {
-    const fileName = e.target.files[0] ? e.target.files[0].name : 'No file selected';
-    fileNameDisplay.textContent = fileName;
-    analyzeBtn.style.display = fileName !== 'No file selected' ? 'inline-block' : 'none';
-    errorSection.style.display = 'none';
+  const fileName = e.target.files[0] ? e.target.files[0].name : 'No file selected';
+  fileNameDisplay.textContent = fileName;
+  analyzeBtn.style.display = fileName !== 'No file selected' ? 'inline-block' : 'none';
+  errorSection.style.display = 'none';
 }
 
 // Main analysis function
 async function analyzeResume() {
-    const file = resumeUpload.files[0];
-    if (!file) {
-        showError('Please select a file first');
-        return;
+  const file = resumeUpload.files[0];
+  if (!file) {
+    showError('Please select a file first');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('resume', file);
+
+  try {
+    // Show loading state
+    loadingSection.style.display = 'block';
+    analyzeBtn.disabled = true;
+    resultsSection.style.display = 'none';
+    errorSection.style.display = 'none';
+
+    // Analyze resume
+    const analysisResponse = await fetch(`${API_BASE_URL}/api/analyze`, {
+      method: 'POST',
+      body: formData
+    });
+    console.log(analysisResponse)
+    if (!analysisResponse.ok) {
+      const errorData = await analysisResponse.json();
+      throw new Error(errorData.error || 'Analysis failed');
     }
 
-    const formData = new FormData();
-    formData.append('resume', file);
+    const analysisData = await analysisResponse.json();
+    console.log(analysisData, "data")
+    displayResults(analysisData.data);
 
-    try {
-        // Show loading state
-        loadingSection.style.display = 'block';
-        analyzeBtn.disabled = true;
-        resultsSection.style.display = 'none';
-        errorSection.style.display = 'none';
-
-        // Analyze resume
-        const analysisResponse = await fetch(`${API_BASE_URL}/api/analyze`, {
-            method: 'POST',
-            body: formData
-        });
-
-        if (!analysisResponse.ok) {
-            const errorData = await analysisResponse.json();
-            throw new Error(errorData.error || 'Analysis failed');
-        }
-
-        const analysisData = await analysisResponse.json();
-        displayResults(analysisData.data);
-
-    } catch (error) {
-        console.error('Error:', error);
-        showError(error.message.includes('rate limit') 
-            ? 'Server is busy. Please try again shortly.'
-            : error.message
-        );
-    } finally {
-        loadingSection.style.display = 'none';
-        analyzeBtn.disabled = false;
-    }
+  } catch (error) {
+    console.error('Error:', error);
+    showError(error.message.includes('rate limit')
+      ? 'Server is busy. Please try again shortly.'
+      : error.message
+    );
+  } finally {
+    loadingSection.style.display = 'none';
+    analyzeBtn.disabled = false;
+  }
 }
 
 function displayResults(data) {
@@ -106,7 +107,7 @@ function displayResults(data) {
       ${data.meta.jobsFound} jobs
     </div>
   `;
-  
+
   resultsSection.innerHTML = metaInfo + resultsSection.innerHTML;
   resultsSection.style.display = 'block';
 }
@@ -114,45 +115,45 @@ function displayResults(data) {
 
 // Display skills function
 function displaySkills(skills) {
-    skillsContainer.innerHTML = '';
-    if (!skills || skills.length === 0) {
-        skillsContainer.innerHTML = '<p>No skills detected</p>';
-        return;
-    }
+  skillsContainer.innerHTML = '';
+  if (!skills || skills.length === 0) {
+    skillsContainer.innerHTML = '<p>No skills detected</p>';
+    return;
+  }
 
-    skills.forEach(skill => {
-        const skillTag = document.createElement('span');
-        skillTag.className = 'skill-tag';
-        skillTag.textContent = skill;
-        skillsContainer.appendChild(skillTag);
-    });
+  skills.forEach(skill => {
+    const skillTag = document.createElement('span');
+    skillTag.className = 'skill-tag';
+    skillTag.textContent = skill;
+    skillsContainer.appendChild(skillTag);
+  });
 }
 
 // Display jobs function
 function displayJobs(jobs) {
-    jobsContainer.innerHTML = '';
-    if (!jobs || jobs.length === 0) {
-        jobsContainer.innerHTML = '<p>No matching jobs found</p>';
-        return;
-    }
+  jobsContainer.innerHTML = '';
+  if (!jobs || jobs.length === 0) {
+    jobsContainer.innerHTML = '<p>No matching jobs found</p>';
+    return;
+  }
 
-    jobs.forEach(job => {
-        const jobCard = document.createElement('div');
-        jobCard.className = 'job-card';
-        jobCard.innerHTML = `
+  jobs.forEach(job => {
+    const jobCard = document.createElement('div');
+    jobCard.className = 'job-card';
+    jobCard.innerHTML = `
             ${job.match ? `<span class="match-score">${job.match}% Match</span>` : ''}
             <h3 class="job-title">${job.title}</h3>
             <p class="company">${job.company} • ${job.location}</p>
             <p>${job.description}</p>
             ${job.url ? `<a href="${job.url}" target="_blank" style="color: var(--primary);">View on LinkedIn</a>` : ''}
         `;
-        jobsContainer.appendChild(jobCard);
-    });
+    jobsContainer.appendChild(jobCard);
+  });
 }
 
 // Error handling function
 function showError(message) {
-    errorSection.innerHTML = `<p>${message}</p>`;
-    errorSection.style.display = 'block';
-    analyzeBtn.style.display = 'inline-block';
+  errorSection.innerHTML = `<p>${message}</p>`;
+  errorSection.style.display = 'block';
+  analyzeBtn.style.display = 'inline-block';
 }
