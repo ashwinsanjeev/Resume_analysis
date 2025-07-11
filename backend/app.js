@@ -17,14 +17,6 @@ app.use(cors({
   optionsSuccessStatus: 200
 }));
 
-
-app.options('*', cors({
-  origin: ['https://resumeanalysis.duckdns.org', 'https://apiresumeanalysis.duckdns.org',"http://127.0.0.1:5501"],
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type'],
-  credentials: true
-}));
-
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(fileUpload({
