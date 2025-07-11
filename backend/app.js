@@ -9,22 +9,21 @@ const app = express();
 
 const server = http.createServer(app);
 // Middleware
-// app.use(cors({
-//   origin: ['http://127.0.0.1:5500', 'http://localhost:5000', 'http://52.66.132.71:3000', 'https://resumeanalysis.duckdns.org', 'https://apiresumeanalysis.duckdns.org', 'http://127.0.0.1:5501'],
-//   methods: ['GET', 'POST'],
-//   allowedHeaders: ['Content-Type'],
-//   credentials: true,
-//   optionsSuccessStatus: 200
-// }));
-
 app.use(cors({
-  origin: ['https://resumeanalysis.duckdns.org', 'https://apiresumeanalysis.duckdns.org'],
+  origin: ['http://127.0.0.1:5500', 'http://localhost:5000', 'http://52.66.132.71:3000', 'https://resumeanalysis.duckdns.org', 'https://apiresumeanalysis.duckdns.org', 'http://127.0.0.1:5501'],
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type'],
   credentials: true,
   optionsSuccessStatus: 200
 }));
 
+
+app.options('*', cors({
+  origin: ['https://resumeanalysis.duckdns.org', 'https://apiresumeanalysis.duckdns.org',"http://127.0.0.1:5501"],
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true
+}));
 
 app.use(morgan('dev'));
 app.use(express.json());
