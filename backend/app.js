@@ -9,20 +9,13 @@ const https = require('https');
 const app = express();
 const server = http.createServer(app);
 // Middleware
-const alloworgins=['http://127.0.0.1:5500','http://127.0.0.1:5501', 'http://52.66.132.71:3000', 'https://resumeanalysis.duckdns.org']
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-      if (alloworgins.includes(origin)) {
-        return callback(null, true);
-      } else {
-        return callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: ['http://127.0.0.1:5500', 'http://localhost:5000', 'http://52.66.132.71:3000', 'https://resumeanalysis.duckdns.org', 'https://apiresumeanalysis.duckdns.org', 'http://127.0.0.1:5501'],
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true,
+  optionsSuccessStatus: 200
+}));
 
 app.use(morgan('dev'));
 app.use(express.json());
