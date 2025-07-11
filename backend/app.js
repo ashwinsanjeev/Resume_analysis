@@ -31,7 +31,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type'],
   optionsSuccessStatus: 200
 }));
-
+app.use(express.static('public'));
 
 // Manual CORS preflight handling
 app.options('/api/*', cors());
