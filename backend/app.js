@@ -15,9 +15,7 @@ app.use(cors({
     const allowedOrigins = [
       'http://127.0.0.1:5501',
       'http://52.66.132.71:3000',
-      'https://resumeanalysis.duckdns.org',
-      'https://apiresumeanalysis.duckdns.org',
-    ];
+      'https://resumeanalysis.duckdns.org'];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -74,3 +72,4 @@ const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+
